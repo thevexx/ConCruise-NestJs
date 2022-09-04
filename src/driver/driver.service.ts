@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateDriverDto } from './driver.dto';
+import { DriverDto } from './driver.dto';
 import { Driver } from './driver.entity';
 
 @Injectable()
@@ -10,17 +10,25 @@ export class DriverService {
         @InjectRepository(Driver) private readonly driverRepository: Repository<Driver>,
     ) { }
 
-    createDriver(createDriverDto: CreateDriverDto) {
+    createDriver(createDriverDto: DriverDto) {
         const newDriver = this.driverRepository.create(createDriverDto);
         return this.driverRepository.save(newDriver);
     }
 
-    findUsersById(id: number) {
+    findDriverById(id: number) {
         return this.driverRepository.findOneBy({ id });
     }
 
     get() {
         return this.driverRepository.find();
+    }
+
+    editDriverById(id: number, editDriver: DriverDto) {
+        return this.driverRepository.update({ id }, editDriver);
+    }
+
+    deleteDriverById(id: [number]) {
+        return this.driverRepository.delete(id);
     }
 
     seed() {

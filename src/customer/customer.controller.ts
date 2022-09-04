@@ -1,5 +1,5 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, UsePipes, ValidationPipe } from '@nestjs/common';
-import { CreateCustomerDto } from './customer.dto';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
+import { CustomerDto } from './customer.dto';
 import { CustomerService } from './customer.service';
 
 @Controller('customer')
@@ -7,7 +7,7 @@ export class CustomerController {
     constructor(private readonly customerService: CustomerService) { }
 
     @Get()
-    getUsers() {
+    getCustomers() {
         return this.customerService.get();
     }
 
@@ -17,14 +17,25 @@ export class CustomerController {
     }
 
     @Get('id/:id')
-    findUsersById(@Param('id', ParseIntPipe) id: number) {        
-        return this.customerService.findUsersById(id);
+    findCustomerById(@Param('id', ParseIntPipe) id: number) {
+        return this.customerService.findCustomerById(id);
+    }
+
+    @Put('edit/:id')
+    @UsePipes(ValidationPipe)
+    editCustomerById(@Param('id', ParseIntPipe) id: number, @Body() editCustomer: CustomerDto) {
+        return this.customerService.editCustomerById(id, editCustomer);
+    }
+
+    @Delete('delete')
+    @UsePipes(ValidationPipe)
+    deleteCustomerById(@Body() ids: [number]) {
+        return this.customerService.deleteCustomerById(ids);
     }
 
     @Post('create')
     @UsePipes(ValidationPipe)
-    createUsers(@Body() createCustomerDto: CreateCustomerDto) {
-        return this.customerService.createCustomer(createCustomerDto);
+    createCustomer(@Body() createCustomer: CustomerDto) {
+        return this.customerService.createCustomer(createCustomer);
     }
 }
- 

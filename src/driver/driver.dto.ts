@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsNotEmpty, Min, MinLength } from "class-validator";
 
-export class CreateDriverDto {
+export class DriverDto {
     @IsNotEmpty()
     @MinLength(3)
     @ApiProperty()

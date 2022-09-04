@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateCustomerDto } from './customer.dto';
+import { CustomerDto } from './customer.dto';
 import { Customer } from './customer.entity';
 
 @Injectable()
@@ -10,13 +10,21 @@ export class CustomerService {
         @InjectRepository(Customer) private readonly customerRepository: Repository<Customer>,
     ) { }
 
-    createCustomer(createCustomerDto: CreateCustomerDto) {
-        const newCustomer = this.customerRepository.create(createCustomerDto);
+    createCustomer(createCustomer: CustomerDto) {
+        const newCustomer = this.customerRepository.create(createCustomer);
         return this.customerRepository.save(newCustomer);
     }
 
-    findUsersById(id: number) {
+    findCustomerById(id: number) {
         return this.customerRepository.findOneBy({ id });
+    }
+
+    editCustomerById(id: number, editCustomer: CustomerDto) {
+        return this.customerRepository.update({ id }, editCustomer);
+    }
+
+    deleteCustomerById(id: [number]) {
+        return this.customerRepository.delete(id);
     }
 
     get() {

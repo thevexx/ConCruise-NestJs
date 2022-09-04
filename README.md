@@ -42,6 +42,14 @@ $ npm run start
 $ npm run console
 ```
 
+
+## Swagger API Docs
+
+```
+# visit 
+http://localhost:3000/api
+```
+
 ## License
 
 Nest is [MIT licensed](LICENSE).
